@@ -1,6 +1,7 @@
 == Youboard
   - 이 웹 애플리케이션은 Monolithic 한 형태의 문제점이 있어서 현재 'Postpang'이란 서비스명으로
-    모바일과 웹 클라이언트 연동을 위해 RESTful API로 만들어서 분리중. (AngularJS를 이용하다 2.0 마이그레이션 미지원에 문제로 BackboneJS 채택) 
+    모바일과 웹 클라이언트 연동을 위해 RESTful API로 만들어서 분리중. 
+    (AngularJS를 이용하다 2.0 마이그레이션 미지원 문제로 BackboneJS 채택) 
 
 
 == 소개 
