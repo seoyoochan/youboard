@@ -1,0 +1,16 @@
+
+<div id="users">
+	<strong class="title">사람들</strong>
+	</br></br>
+	<ul>
+		<% User.all.each do |user| %>
+		  <% unless (user == current_user) || (user.sign_in_count == 0) %>
+		  <li><strong><%= link_to fullname(user), "#" %></strong></li>
+		  <% end %>
+		<% end %>
+	</ul>
+	</br></br>
+	<strong class="title"><%= link_to "친구신청 페이지", new_friendship_path %></strong>
+	
+</div>
+

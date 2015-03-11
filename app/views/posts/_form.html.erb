@@ -1,0 +1,90 @@
+<%= simple_form_for(@post, html: {multipart: true, class: "ui form", id: "post_form"} ) do |f| %>
+
+    <%= render("archives/archive_box") %>
+
+    <%= render("archives/index") %>
+
+    <% if params[:action] == "new" %>
+      <%= f.input :attachment_token, as: :hidden, input_html: { value: @attachment_token, class: "attachment_token" } %>
+    <% else %>
+      <%= f.input :attachment_token, as: :hidden, input_html: { class: "attachment_token" } %>
+    <% end %>
+
+    <div class="field">
+    <%= f.input :board_id, collection: current_user.boards, input_html: { class: "board_id dropdown fluid" }, prompt: "게시판 선택", label: false, required: true %>
+    </div>
+
+    <div class="field">
+    <%= f.input :title, input_html: { class: "title" }, autofocus: true, required: true, label: false, placeholder: "제목" %>
+    </div>
+
+    <div class="field">
+    <%= f.input :body, input_html: { class: "body", id: "froala_editor" }, autofocus: false, required: true, label: false, placeholder: "내용" %>
+    </div>
+
+    <%= f.input :publication, collection: @publication_list, as: :semantic_ui_radio_buttons, autofocus: false, required: true, label: false %>
+
+    <div class="field">
+      <div class="ui toggle checkbox allow_comment_container">
+        <%= f.input :allow_comment, as: :boolean, boolean_style: :inline, input_html: { class: "allow_comment", checked: true }, autofocus: false, required: false, wrapper: false, label: "댓글허용" %>
+      </div>
+    </div>
+
+
+    <div class="field">
+    <%= f.input :tag_list, wrapper: false, label: false, placeholder: "태그" %>
+    </div>
+
+    <div class="filelists">
+      <div class="filelist complete ui accordion">
+        <div class="active title">
+        <h5><i class="fa fa-paperclip icon"></i><%= t("default.attachments") %><i class="dropdown icon"></i></h5>
+        </div>
+        <ol class="active content">
+          <% if @post.attachment && (params[:action] != "new") && @post.attachment.attached_files.first.persisted? %>
+          <% @post.attachment.attached_files.each_with_index do |file,index| %>
+              <li class="clearfix <%= file.id %>">
+                <div class="attachment_file_wrapper">
+                  <div class="attachment_thumbnail">
+                    <% if file.overall_content_type == "image" %>
+                        <span class="attachment_thumbnail_preview">
+                        <img src="<%= file.file.url %>" title="<%= file.original_name %>" />
+                        </span>
+                    <% else %>
+                        <span class="attachment_thumbnail_preview"><%= file.extension %></span>
+                    <% end %>
+                  </div>
+                  <p class="attachment_details">
+                    <%= link_to file.original_name, file.file.url, class: "attachment_title" %>
+                    <span class="date"><%= time_ago_in_words(file.created_at) %></span>
+                    <span class="attachment_options">
+                      <%= link_to t("attachments.download.icon").html_safe, download_path(file), method: :post, class: "download" %>
+                      <%= link_to t("attachments.delete.icon").html_safe, file_delete_path(file), method: :delete, remote: true, class: "remove" if user_signed_in? && @post.attachment.destroy?(current_user) %>
+                    </span>
+                  </p>
+                </div>
+              </li>
+          <% end %>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+
+
+    <div id="progress" class="progress">
+      <div class="progress-bar progress-bar-success"></div>
+    </div>
+
+    <div class="field attachment">
+      <%= f.simple_fields_for :attachment do |ff| %>
+          <%= ff.simple_fields_for :attached_files do |fff| %>
+              <div class="dropzone ui blue basic button fluid"><%= t("attachments.form.prompt").html_safe %></div>
+              <%= fff.input :name, as: :file, autofocus: false, required: false, wrapper: false, label: false, input_html: { multiple: true, id: "fileupload", class: "ui inverted blue button fluid" } %>
+          <% end %>
+      <% end %>
+    </div>
+
+
+    <%= f.submit t("default.publish"), class: "ui teal basic button fluid" %>
+
+<% end %>

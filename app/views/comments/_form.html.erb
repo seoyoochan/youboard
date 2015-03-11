@@ -1,0 +1,7 @@
+<div id="comment_form_container">
+<%= simple_form_for([@post, @comment], remote: true) do |f| %>
+    <%= f.input :body, input_html: { class: "body" }, wrapper: false, label: false %>
+    <%= f.input :publication, collection: @publication_list, as: :radio_buttons, input_html: { class: "publication" }, autofocus: false, required: false, label: false %>
+    <%= f.submit t("default.submit"), class: "submit" %>
+<% end %>
+</div>

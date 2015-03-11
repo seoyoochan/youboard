@@ -1,0 +1,43 @@
+<h1>Listing posts</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>User</th>
+    <th>Board</th>
+    <th>공개여부</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% if @posts.blank? %>
+      <tr>
+        <td>
+          현재 작성된 게시물이 없습니다.
+        </td>
+      </tr>
+  <% else %>
+      <% @posts.each do |post| %>
+          <% if accessible?(post) %>
+          <tr>
+            <td><%= post.title %></td>
+            <td><%= raw post.body %></td>
+            <td><%= name_mapper(post.user) %></td>
+            <td><%= post.board.name %></td>
+            <td><%= post.get_publication %></td>
+            <td><%= link_to 'Show', post %></td>
+            <td><%= link_to 'Edit', edit_post_path(post) %></td>
+            <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>

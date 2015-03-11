@@ -1,0 +1,15 @@
+publisher = faye_subscriber.publish('/comments', {
+    message: '<%= j render @comment %>',
+    size: '<%= @comment.obj.comments.size %>',
+    parent_id: '<%= @comment.parent_id %>',
+    comment_id: '<%= @comment.id %>',
+    action: 'create'
+});
+
+publisher.callback(function(){
+    $('#comment_body').val('');
+});
+
+publisher.errback(function() {
+    alert('There was an error while posting your comment.');
+});

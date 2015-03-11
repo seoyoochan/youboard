@@ -1,0 +1,101 @@
+<div id="profile">
+  <div class="header">
+    <div class="userinfo">
+      <h3 class="name"><%= link_to @user.fullname, user_profile_path(@user.username) %></h3>
+      <% if signed_in? %>
+
+        <span class="friendship_link">
+          <% if current_user.friends? @user %>
+          <div class="ui dropdown">
+            <i class="dropdown icon"></i>
+            <div class="default text"><em style="color:white;">친구</em></div>
+            <div class="menu">
+              <div class="item">알림받기</div>
+              <div class="item"><%= link_to "친구끊기", unfriend_path(@user.id), method: :delete if current_user.friends? @user %></div>
+              <div class="item"><%= link_to "차단하기", block_path(@user.id), method: :put if current_user.can_block? @user %></div>
+            </div>
+          </div>
+          <% end %>
+        <%= link_to "친구요청", send_friend_request_path(@user.id), method: :post if current_user.can_send_friend_request? @user %>
+        <%= link_to "친구요청취소", cancel_friend_request_path(@user.id), method: :delete if current_user.can_cancel_friend_request? @user %>
+        <%= link_to "친구수락", accept_friend_request_path(@user.id), method: :put if current_user.can_accept_friend_request? @user %>
+        <%= link_to "차단해제", unblock_path(@user.id), method: :delete if current_user.can_unblock? @user %>
+        </span>
+      <% end %>
+      <ul class="userCnt">
+        <li><%= t('profile.boards_size', size: @user.boards.size).html_safe %></li>
+        <li><%= t('profile.posts_size', size: @user.posts.size).html_safe %></li>
+        <li><%= t('profile.comments_size', size: @user.comments.size).html_safe %></li>
+      </ul>
+    </div>
+  </div>
+  <div class="body">
+    <div class="lists_container clearfix">
+      <div class="f-l">
+        <h2 class="ui header"><%= t('profile.header.boards') %></h2>
+      </div>
+      <% if @user.boards? %>
+          <%= will_paginate @boards, previous_label: "<", next_label: ">", param_name: "boards_page" %>
+          <div class="ui divider"></div>
+          <ul>
+            <% @boards.each do |board| %>
+                <% if accessible?(board) %>
+                <li><%= link_to t('profile.boards_list', topic: board.get_board_topic, id: board.id, title: board.name, posts_size: board.posts.size).html_safe, user_board_path(@user.username, board) %></li>
+                <% end %>
+            <% end %>
+          </ul>
+      <% else %>
+          <div class="ui divider"></div>
+      <% end %>
+    </div>
+    <div class="lists_container clearfix">
+      <div class="f-l">
+        <h2 class="ui header"><%= t('profile.header.posts') %></h2>
+      </div>
+      <% if @user.posts? %>
+          <%= will_paginate @posts, previous_label: "<", next_label: ">", param_name: "posts_page" %>
+          <div class="ui divider"></div>
+          <div class="ui items">
+            <% @posts.each do |post| %>
+                <% if accessible?(post) %>
+                <div class="item">
+                  <div class="image">
+                    <% if post.body.include? "<img src" %>
+                        <%= image_tag(Nokogiri::HTML(post.body).css("img").map { |i| i["src"] }.first) %>
+                    <% else %>
+                        <div class="no_image">No Image</div>
+                    <% end %>
+                    <%= link_to "#{fa_icon 'bookmark', class: 'bookmark'}".html_safe, scrap_path(post.user.username, post.board_id, post.id), method: :post, class: "ui corner label" if signed_in? && !current_user.scrapped?(post) %>
+                    <%= link_to "#{fa_icon 'bookmark', class: 'bookmarked'}".html_safe, scrap_path(post.user.username, post.board_id, post.id), method: :delete, class: "ui corner label" if signed_in? && current_user.scrapped?(post) %>
+                  </div>
+                  <div class="content">
+                    <div class="meta"><%= time_ago_in_words post.updated_at %></div>
+                    <div class="name"><%= link_to HTMLEntities.new.decode(summarize(post.title, 22)), user_board_post_path(post.user.username, post.board_id, post) %></div>
+                    <p class="description"><%= truncate(Sanitize.fragment(post.body), :length => 200,  :separator => ' ') %></p>
+                  </div>
+                </div>
+                <% end %>
+            <% end %>
+          </div>
+      <% else %>
+          <div class="ui divider"></div>
+      <% end %>
+    </div>
+    <div class="lists_container clearfix">
+      <div class="f-l">
+        <h2 class="ui header"><%= t('profile.header.comments') %></h2>
+      </div>
+      <% if @user.posts? %>
+          <%= will_paginate @comments, previous_label: "<", next_label: ">", param_name: "comments_page" %>
+          <div class="ui divider"></div>
+          <ul>
+            <% @comments.each do |comment| %>
+                <% if accessible?(comment) %><li><%= link_to t('profile.comments_list', topic: comment.obj.board.get_board_topic, id: comment.obj.id, title: comment.obj.title, comments_size: comment.obj.comment_threads.size, summary: comment.body).html_safe, "/#{comment.user.username}/boards/#{comment.obj.board_id}/posts/#{comment.obj.id}#comment_#{comment.id}" %></li><% end %>
+            <% end %>
+          </ul>
+      <% else %>
+          <div class="ui divider"></div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+//var size = "<em class='number'><%= @comment.obj.comments.size %></em>";
+//$('.comments_size_heading .number').replaceWith(size);
+//$("#comment_" + "<%= @comment.id %>").remove();
+
+publisher = faye_subscriber.publish('/comments', {
+    message: '<%= j render @comment %>',
+    size: '<%= @comment.obj.comments.size %>',
+    parent_id: '<%= @comment.parent_id %>',
+    id: '<%= @comment.id %>',
+    action: 'destroy'
+});

@@ -1,0 +1,130 @@
+// Reload the list of archives
+$('#archive_list').replaceWith('<%= j render("index") %>');
+$('#archive_list').modal('show');
+
+// Select All/ Deselect All
+$("#archive_all").click(function(e){
+    if(this.checked) {
+        $('#archive_list input[name="archive[]"]').each(function(){
+            this.checked = true;
+        });
+    } else {
+        $('#archive_list input[name="archive[]"]').each(function(){
+            this.checked = false;
+        });
+    }
+});
+
+// Action: Destroy
+$('#archive_list .actions .destroy').click(function(e){
+    var checked_values = [], checked_box = $('#archive_list input[name="archive[]"]:checked');
+
+    checked_box.each(function(){
+        checked_values.push($(this).val());
+    });
+
+    $.ajax({
+        url: '/archive',
+        method: 'DELETE',
+        dataType: 'json',
+        data: { checked_values: checked_values }
+    }).success(function(result){
+
+        $("#archive_button .archives_count").replaceWith("<span class='archives_count'>" + result.count + "</span>");
+        var flash = '<div class="ui blue message floating">'+ result.message +'</div>';
+        $("body").append(flash);
+        setTimeout(function(){
+            $('.ui.message').fadeOut(500, function(){ $(this).remove(); });
+        }, 5000);
+
+    }).error(function(response){
+        var result = $.parseJSON(response.responseText),
+                flash = '<div class="ui red message floating">'+
+                        '<ul class="list">'+
+                        '<li>'+ result.message +'</li>'+
+                        '</ul>'+
+                        '</div>';
+        $("body").append(flash);
+        setTimeout(function(){
+            $('.ui.message').fadeOut(500, function(){ $(this).remove(); });
+        }, 5000);
+    });
+
+});
+
+// Action: Insert
+$('#archive_list .actions .insert').click(function(e){
+    var checked_values = [], checked_box = $('#archive_list input[name="archive[]"]:checked');
+
+    checked_box.each(function(){
+        checked_values.push($(this).val());
+    });
+
+    $.ajax({
+        url: '/archive_insert',
+        method: 'POST',
+        dataType: 'json',
+        data: { checked_values: checked_values }
+
+    }).success(function(result){
+
+        var archive = $.parseJSON(result.archive),
+            tag_list = $.parseJSON(result.tag_list);
+
+        var flash = '<div class="ui blue message floating">'+ result.message +'</div>';
+
+        $("body").append(flash);
+
+        setTimeout(function(){
+            $('.ui.message').fadeOut(500, function(){ $(this).remove(); });
+        }, 5000);
+
+        $('input[name="post[title]"]').val(archive.title);
+        $('textarea[name="post[body]"]').val(archive.body);
+        $('.dropdown.board_id').data().moduleDropdown.action.activate(undefined, archive.board_id);
+        $('input#post_publication_' + archive.publication).prop('checked', true);
+        $('.attachment_token').val(archive.attachment_token);
+
+        if (archive.allow_comment) {
+            $('.ui.allow_comment_container').checkbox('check');
+        } else {
+            $('.ui.allow_comment_container').checkbox('uncheck');
+        }
+
+        if (tag_list.length > 0) {
+            $('#post_tag_list').val(tag_list);
+        }
+
+        $('.filelists .content li').remove(); // Reset list of files
+
+        if (result.attachment_id) {
+            var file_ids = $.parseJSON(result.file_ids);
+            file_ids = [file_ids][0];
+
+            $.each(file_ids, function(index,value){
+                $.ajax({
+                    url: '/attachments/file_locale',
+                    dataType: 'html',
+                    data: { id: value },
+                    type: 'POST'
+                }).done(function(result){
+                    $('.filelists .filelist .content').append(result);
+                });
+            });
+        }
+
+
+    }).error(function(response){
+        var result = $.parseJSON(response.responseText),
+                flash = '<div class="ui red message floating">'+
+                        '<ul class="list">'+
+                        '<li>'+ result.message +'</li>'+
+                        '</ul>'+
+                        '</div>';
+        $("body").append(flash);
+        setTimeout(function(){
+            $('.ui.message').fadeOut(500, function(){ $(this).remove(); });
+        }, 5000);
+    });
+
+});

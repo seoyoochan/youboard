@@ -1,0 +1,6 @@
+<%= simple_form_for(@board) do |f| %>
+    <%= f.input :topic, collection: Board.taglist, label_method: :first, value_method: :last, prompt: "게시판 주제", autofocus: false, input_html: { class: "topics" }, label: false %>
+    <%= f.input :name, input_html: { class: "name" }, autofocus: true, required: true, label: false, placeholder: "게시판 제목을 입력해주세요." %>
+    <%= f.input :publication, collection: @publication_list, as: :radio_buttons, input_html: { class: "publication" }, autofocus: false, required: false, label: false, checked: 0 %>
+    <%= f.submit t("default.create"), class: "ui blue submit button f-r" %>
+<% end %>

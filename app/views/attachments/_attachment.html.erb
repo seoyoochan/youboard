@@ -1,0 +1,32 @@
+    <div class="filelists">
+      <div class="filelist complete ui accordion">
+        <div class="title">
+          <h5><i class="fa fa-paperclip icon"></i><%= t("default.attachments") %><i class="dropdown icon"></i></h5>
+        </div>
+        <ol class="content">
+          <% attachment.attached_files.each_with_index do |file,index| %>
+              <li class="clearfix <%= file.id %>">
+                <div class="attachment_file_wrapper">
+                  <div class="attachment_thumbnail">
+                    <% if file.overall_content_type == "image" %>
+                        <span class="attachment_thumbnail_preview">
+                        <img src="<%= file.file.url %>" title="<%= file.original_name %>" />
+                        </span>
+                    <% else %>
+                        <span class="attachment_thumbnail_preview"><%= file.extension %></span>
+                    <% end %>
+                  </div>
+                  <p class="attachment_details">
+                    <%= link_to file.original_name, file.file.url, class: "attachment_title" %>
+                    <span class="date"><%= time_ago_in_words(file.created_at) %></span>
+                    <span class="attachment_options">
+                      <%= link_to t("attachments.download.icon").html_safe, download_path(file), method: :post, class: "download" %>
+                      <%= link_to t("attachments.delete.icon").html_safe, file_delete_path(file), method: :delete, remote: true, class: "remove" if user_signed_in? && attachment.destroy?(current_user) %>
+                    </span>
+                  </p>
+                </div>
+              </li>
+          <% end %>
+        </ol>
+      </div>
+    </div>

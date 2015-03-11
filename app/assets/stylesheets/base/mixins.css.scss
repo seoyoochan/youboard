@@ -1,0 +1,12 @@
+@mixin transition($speed) {
+  -webkit-transition: background-color $speed linear,color $speed linear,opacity $speed linear,color $speed linear,border-color $speed linear;
+-moz-transition: background-color $speed linear,color $speed linear,opacity $speed linear,color $speed linear,border-color $speed linear;
+  -ms-transition: background-color $speed linear,color $speed linear,opacity $speed linear,color $speed linear,border-color $speed linear;
+  -o-transition: background-color $speed linear,color $speed linear,opacity $speed linear,color $speed linear,border-color $speed linear;
+  transition: background-color $speed linear,color $speed linear,opacity $speed linear,color $speed linear,border-color $speed linear;
+}
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}

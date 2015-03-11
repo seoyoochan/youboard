@@ -1,0 +1,45 @@
+<h1>프로필 사진</h1>
+
+<picture class="avatar_wrapper">
+  <%= image_tag "#{current_user.avatar.default_url}", size: "42x42",class: "avatar" if current_user.avatar.blank? %>
+  <%= image_tag "#{current_user.avatar.medium_avatar.url}", class: "avatar" if current_user.avatar.present? %>
+</picture>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true, class: "avatar_form" } ) do |f| %>
+    <%= f.file_field :avatar, wrapper: false, label: false %>
+    <%= f.input :remove_avatar, as: :boolean, label: "이미지 삭제", input_html: { checked: false, class: "destroy" } %>
+    <%= f.input :avatar_cache, as: :hidden %>
+    <%= f.submit t("default.save") %>
+<% end %>
+
+<br/>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <h1>Credentials</h1>
+    <%= f.input :email, required: true, autofocus: true %>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+    <% end %>
+
+    <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
+    <%= f.input :password_confirmation, required: false %>
+
+    <br/>
+    <h1>기본 정보</h1>
+    <%= f.input :first_name, required: false, autofocus: false %>
+    <%= f.input :last_name, required: false, autofocus: false %>
+    <%= f.input :gender, collection: { :female => t("signup.gender.female"), :male => t("signup.gender.male") }.map { |k,v| [v,k] }, prompt: "I am.." %>
+    <%= f.input :locale, collection: @locales.map { |k,v| [v,k] }, selected: I18n.locale,  input_html: { class: "locale" }, label: false, error: false %>
+    <%= f.input :birthday, as: :date, order: [:year, :month, :day], prompt: {year: t('date.year'), month: t('date.month'), day: t('date.day')},
+                start_year: Date.current.year, end_year: 1920, use_month_names: t(:month_names, scope: :date),
+                required: false, label: false, input_html: { class: "birthday" }, error: false %>
+    <%= f.button :submit, t("default.save") %>
+<% end %>
+
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+<%= link_to "Back", :back %>

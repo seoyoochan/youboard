@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale.to_s %>">
+<head>
+  <title>Youboard</title>
+  <link href='//fonts.googleapis.com/earlyaccess/nanumgothic.css' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta content='<%= user_signed_in? ? current_user.id : nil %>' name='user-id'/>
+
+</head>
+<body id="<%= params[:controller].gsub(/\//, "_") %>" class="<%= params[:action] %>">
+<%= render "shared/header" %>
+<%= render "shared/flash" unless flash.blank? %>
+<%= render "shared/body" %>
+<audio id="chatAudio"><source src="/sounds/chat_alert.mp3" type="audio/mpeg"></audio>
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<script type="text/javascript">
+    <% if flash.present? %>
+    setTimeout(function(){
+        $('.ui.message').fadeOut(500, function(){ $(this).remove(); });
+    }, 5000);
+    <% end %>
+</script>
+</body>
+</html>

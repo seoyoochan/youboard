@@ -1,0 +1,21 @@
+/*********************************************
+* Utilities
+**********************************************/
+.clearfix{
+  clear: both;
+  overflow: auto;
+  zoom: 1;
+}
+.f-l{float:left}
+.f-r{float:right}
+.num_highlight {
+  margin-right: 5px;
+  color: #f60;
+  font-weight: 600;
+}
+i.bookmark {
+  color: #999;
+}
+i.bookmarked {
+  color: $main_color;
+}

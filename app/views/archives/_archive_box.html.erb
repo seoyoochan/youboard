@@ -1,0 +1,7 @@
+<div id="archive_button" class="ui dropdown">
+  <div class="ui basic button"><i class="fa fa-archive icon"></i>임시 보관함 (<span class="archives_count"><%= @archives.count %></span>)</div>
+  <div class="menu">
+    <div class="item"><%= link_to "저장하기", "#archive_button", class: "create_archive" %></div>
+    <div class="item"><%= link_to "목록보기", archives_path, class: "archive_list", remote: true %></div>
+  </div>
+</div>

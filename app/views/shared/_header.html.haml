@@ -1,0 +1,51 @@
+#header.clearfix
+  %ul.nav-left.pull-left
+    %li.search
+      %i.fa.fa-search
+    %li.nav
+      %div.menu_name.ui.dropdown
+        %i{class: "fa fa-align-justify icon"}
+        %span.text= t("default.categories")
+        %i{class: "fa fa-caret-down icon"}
+        .menu_border.menu
+          .menu_content
+            .body
+              %ul.pull-left.list
+                - @menu_list.each_with_index do |value, index|
+                  - break if index == 10
+                  %li.item.ui.menu_popup= link_to value, "topics/#{index}"
+                  %div{ class: "ui flowing popup" }= t("default.popup.menu", value: value)
+              %ul.pull-left.list
+                - @menu_list.each_with_index do |value, index|
+                  - break if index == 20
+                  - if index > 9
+                    %li.item.ui.menu_popup= link_to value, "topics/#{index}"
+                    %div{ class: "ui flowing popup" }= t("default.popup.menu", value: value)
+              %ul.pull-left.list
+                - @menu_list.each_with_index do |value, index|
+                  - break if index == 30
+                  - if index > 19
+                    %li.item.ui.menu_popup= link_to value, "topics/#{index}"
+                    %div{ class: "ui flowing popup" }= t("default.popup.menu", value: value)
+              %ul.pull-left.list
+                - @menu_list.each_with_index do |value, index|
+                  - if index > 29
+                    %li.item.ui.menu_popup= link_to value, "topics/#{index}"
+                    %div{ class: "ui flowing popup" }= t("default.popup.menu", value: value)
+            .footer.clearfix
+              %span{class: "pull-left ui menu_popup"}
+                %i.fa.fa-headphones.icon
+                = link_to t("default.help_center"), "#"
+              %div{ class: "ui flowing popup" }= t("default.popup.help_center")
+              .pull-right{class: "ui menu_popup"}
+                %i.fa.fa-bolt.icon
+                %span.text= link_to t("default.guide"), "#"
+              %div{ class: "ui flowing popup" }= t("default.popup.guide")
+  %h1.logo= link_to "YOU<span class='italic'>B</span>OARD".html_safe, root_url
+  %ul.nav-right.pull-right
+    - unless signed_in?
+      %li= link_to t("default.join"), new_user_registration_path
+      %li= link_to t("default.login"), new_user_session_path
+    - else
+      %li= link_to "프로필사진", "#"
+      %li= link_to t("default.logout"), destroy_user_session_path, method: :delete

@@ -1,0 +1,14 @@
+#pages.home {
+  #content {
+
+  }
+  #sidebar {
+    #topic-livefilter-input {
+      padding-left: 10px !important;
+    }
+    #topic-livefilter-list {
+      li a { color: #888; }
+      li a:hover { color: $main_color; }
+    }
+  }
+}

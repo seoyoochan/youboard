@@ -1,0 +1,345 @@
+ko:
+  archives:
+    flash:
+      success:
+        create: 임시저장 되었습니다!
+        destroy:
+          many: 임시저장된 글들을 삭제했습니다.
+          one: 임시저장된 글을 삭제했습니다.
+        insert: 임시저장된 글을 불러왔습니다.
+      error:
+        create: "임시저장하는데 실패했습니다.<br/><br/>%{reason}"
+        destroy:
+          empty: 삭제할 임시저장된 글이 없습니다.
+        insert:
+          too_many: 하나씩 선택해서 불러주세요.
+          empty: 불러올 글을 선택해주세요.
+  attachments:
+    form:
+      prompt: <i class="fa fa-file icon"></i>파일선택 또는 파일을 여기에 놓으세요.
+    download:
+      icon: <i class="fa fa-arrow-down icon"></i> 다운로드
+      text: 다운로드
+    delete:
+      icon: <i class="fa fa-close icon"></i> 삭제하기
+      text: 삭제하기
+    flash:
+      error:
+        size: "%{name} 업로드 실패 (최대 첨부파일 크기: 20MB)"
+        type: "%{name} 업로드 실패 (업로드 불가능한 '%{type}' 타입)"
+  friendships:
+    action:
+      send_request: "친구요청"
+      accept: "친구수락"
+      reject: "요청거절"
+      cancel: "요청취소"
+      unfriend: "친구끊기"
+      block: "차단"
+      unblock: "차단해제"
+  posts:
+    allow_comment:
+      yes: "허용"
+      no: "금지"
+  topics:
+    list: ["동물", "건축물", "예술", "자동차 및 오토바이", "유명인", "디자인", "DIY 및 수공예품", "교육", "영화, 음악 및 책", "음식 및 음료", "정원 가꾸기", "괴짜", "헤어 및 뷰티", "건강 및 피트니스", "역사", "명절 및 이벤트", "집안 가꾸기", "유머", "일러스트레이션 및 포스터", "어린이", "남성 패션", "여성 패션", "야외활동", "사진", "상품", "인용구", "과학 및 자연", "스포츠", "문신", "기술", "여행", "웨딩", "정치 및 외교", "경제 및 금융", "군사", "기타"]
+  publications:
+    list: ["전체공개", "나만보기", "친구공개"]
+  signup:
+    gender:
+      female: 여성
+      male: 남성
+  boards:
+    flash:
+      success:
+        create: 게시판이 성공적으로 생성되었습니다.
+        update: 게시판이 성공적으로 변경되었습니다.
+        destroy: 게시판이 성공적으로 삭제되었습니다.
+      error:
+        no_boards: 이 회원은 소유하고 있는 게시판이 없습니다.
+        no_requested_board: 존재하지 않는 게시판입니다.
+  profile:
+    boards_list: <div class="headline"><span class="topic">%{topic}</span><span class="id">%{id}</span><span class="title">%{title}</span><span class="posts_size size"><strong class="num_highlight">%{posts_size}</strong>개의 글</span></div>
+    comments_list: <div class="headline"><span class="topic">%{topic}</span><span class="id">%{id}</span><span class="title">%{title}</span><span class="comments_size size"><strong class="num_highlight">%{comments_size}</strong>개의 댓글</span></div><div class="summary">%{summary}</div>
+    boards_size: <strong class="num_highlight">%{size}</strong>개 게시판,
+    posts_size: <strong class="num_highlight">%{size}</strong>개 글,
+    comments_size: <strong class="num_highlight">%{size}</strong>개 댓글
+    header:
+      boards: 이 회원의 모든 게시판
+      posts: 이 회원의 모든 글
+      comments: 이 회원의 모든 댓글
+  default:
+    topic_filter: 주제별 필터검색...
+    popup:
+      menu: "%{value}에 대해 지식쌓기"
+      help_center: 질문 및 신고를 하거나 자주묻는질문 찾기
+      guide: 다양한 기능에 대해 안내해드립니다!
+      topic_filter: 주제별 인기차트를 볼 수 있어요! (검색/클릭)
+    newest_posts: 새로운 글
+    newest_boards: 새로운 게시판
+    all_boards: 모든게시판
+    popular_boards: 인기게시판
+    join: 회원가입
+    login: 로그인
+    logout: 로그아웃
+    home:
+      text: 홈으로
+      html: <i class="home icon"></i> 홈으로
+    categories: 카테고리
+    all_topics: 모두보기
+    create: 생성
+    save: 저장
+    submit: 등록
+    success: 성공
+    fail: 실패
+    error: 에러
+    publish: 글 전송
+    attachments: 첨부파일
+    help_center: 고객센터
+    guide: 사용법 가르쳐줘!
+    flash:
+      exception: "%{reason}<br/><br/>예상치못한 에러가 발생했습니다. 관리자에게 문의해주세요."
+  date:
+    year: "연도"
+    month: "월"
+    day: "일"
+    abbr_day_names:
+    - 일
+    - 월
+    - 화
+    - 수
+    - 목
+    - 금
+    - 토
+    abbr_month_names:
+    -
+    - 1월
+    - 2월
+    - 3월
+    - 4월
+    - 5월
+    - 6월
+    - 7월
+    - 8월
+    - 9월
+    - 10월
+    - 11월
+    - 12월
+    day_names:
+    - 일요일
+    - 월요일
+    - 화요일
+    - 수요일
+    - 목요일
+    - 금요일
+    - 토요일
+    formats:
+      default: ! '%Y/%m/%d'
+      long: ! '%Y년 %m월 %d일 (%a)'
+      short: ! '%m/%d'
+    month_names:
+    -
+    - 1월
+    - 2월
+    - 3월
+    - 4월
+    - 5월
+    - 6월
+    - 7월
+    - 8월
+    - 9월
+    - 10월
+    - 11월
+    - 12월
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 약 한 시간
+        other: 약 %{count}시간
+      about_x_months:
+        one: 약 한 달
+        other: 약 %{count}달
+      about_x_years:
+        one: 약 일 년
+        other: 약 %{count}년
+      almost_x_years:
+        one: 일 년 이하
+        other: ! '%{count}년 이하'
+      half_a_minute: 30초
+      less_than_x_minutes:
+        one: 일 분 이하
+        other: ! '%{count}분 이하'
+      less_than_x_seconds:
+        one: 일 초 이하
+        other: ! '%{count}초 이하'
+      over_x_years:
+        one: 일 년 이상
+        other: ! '%{count}년 이상'
+      x_days:
+        one: 하루
+        other: ! '%{count}일'
+      x_minutes:
+        one: 일 분
+        other: ! '%{count}분'
+      x_months:
+        one: 한 달
+        other: ! '%{count}달'
+      x_seconds:
+        one: 일 초
+        other: ! '%{count}초'
+    prompts:
+      day: 일
+      hour: 시
+      minute: 분
+      month: 월
+      second: 초
+      year: 년
+  errors:
+    format: ! '%{attribute}%{message}'
+    messages:
+      wrong_size: "이 잘못된 크기입니다. (가능크기: %{file_size})"
+      size_too_small: "이 작아서 업로드 할 수 없습니다. (최소크기: %{file_size})"
+      size_too_big: "이 커서 업로드 할 수 없습니다. (최대크기: %{file_size})"
+      carrierwave_processing_error: 프로세싱 에러
+      carrierwave_integrity_error: 확장자는 업로드 불가능
+      carrierwave_download_error: 을 다운로드 할 수 없습니다.
+      extension_white_list_error: "%{extension} 확장자는 업로드할 수 없습니다. (허용 확장자: %{allowed_types})"
+      extension_black_list_error: "%{extension} 확장자는 업로드할 수 없습니다. (금지된 확장자: %{prohibited_types})"
+      rmagick_processing_error: "Failed to manipulate with rmagick, maybe it is not an image?"
+      mime_types_processing_error: "Failed to process file with MIME::Types, maybe not valid content-type? Original Error: %{e}"
+      mini_magick_processing_error: "Failed to manipulate with MiniMagick, maybe it is not an image? Original Error: %{e}"
+      min_size_error: "파일 크기는 최소한 %{min_size} 이상 이어야 합니다."
+      max_size_error: "파일 크기는 최소한 %{max_size} 이하 여야 합니다."
+      accepted: 을(를) 반드시 확인해야 합니다
+      blank: 에 내용을 입력해 주세요
+      confirmation: 은(는) 서로 일치해야 합니다
+      empty: 에 내용을 입력해 주세요
+      equal_to: 은(는) %{count}과 같아야 합니다
+      even: 에 짝수를 입력해 주세요
+      exclusion: 은(는) 이미 예약되어 있는 값입니다
+      greater_than: 은(는) %{count}보다 커야 합니다
+      greater_than_or_equal_to: 은(는) %{count}보다 크거야 같아야 합니다
+      inclusion: 은(는) 목록에 포함되어 있는 값이 아닙니다
+      invalid: 은(는) 올바르지 않은 값입니다
+      less_than: 은(는) %{count}보다 작아야 합니다
+      less_than_or_equal_to: 은(는) %{count}과 작거나 같아야 합니다
+      not_a_number: 에 숫자를 입력해 주세요
+      not_an_integer: 에 정수를 입력해 주세요
+      odd: 에 홀수를 입력해 주세요
+      record_invalid: 데이터 검증에 실패하였습니다. %{errors}
+      taken: 은(는) 이미 존재합니다.
+      too_long: 은(는) %{count}자를 넘을 수 없습니다
+      too_short: 은(는) 적어도 %{count}자를 넘어야 합니다
+      wrong_length: 은(는) %{count}자여야 합니다
+      not_saved: 다음 에러 때문에 저장이 안되었습니다.
+    template:
+      body: ! '다음 항목에 문제가 발견되었습니다:'
+      header:
+        one: 한 개의 오류가 발생해 %{model}를 저장 할 수 없습니다
+        other: ! '%{count}개의 오류가 발생해 %{model}를 저장 할 수 없습니다'
+  helpers:
+    select:
+      prompt: 선택해주세요
+    submit:
+      create: 등록
+      submit: 제출
+      update: 갱신
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%n%u'
+        precision: 0
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: 원
+    format:
+      delimiter: ! ','
+      precision: 3
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n%u'
+        units:
+          billion: 십억
+          million: 백만
+          quadrillion: 경
+          thousand: 천
+          trillion: 조
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n%u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', '
+      two_words_connector: ! '와(과) '
+      words_connector: ! ', '
+  time:
+    am: 오전
+    formats:
+      default: ! '%Y/%m/%d %H:%M:%S'
+      long: ! '%Y년 %m월 %d일, %H시 %M분 %S초 %Z'
+      short: ! '%y/%m/%d %H:%M'
+    pm: 오후
+  activerecord:
+    models:
+      user: 회원
+      post: 게시글
+      board: 게시판
+      comment: 댓글
+    attributes:
+      post:
+        board_id: 게시판선택
+        title: 제목
+        body: 내용
+        publication: 공개대상
+        allow_comment: 댓글허용여부
+      attached_file:
+        name: "파일"
+      user:
+        username: "아이디"
+        first_name: "이름"
+        last_name: "성"
+        email: "이메일주소"
+        password: "비밀번호"
+        password_confirmation: "비밀번호 재확인"
+        birthday: "생일"
+        remember_me: "로그인유지"
+        agreement: "약관동의"
+        locale: "언어"
+        gender: "성별"
+        current_password: "현재 비밀번호"
+  pundit:
+    post_policy:
+      update?: 글을 수정 할 권한이 없습니다.
+      edit?: 글을 수정 할 권한이 없습니다.
+      destroy: 글을 삭제 할 권한이 없습니다.
+    board_policy:
+      update?: 게시판을 수정 할 권한이 없습니다.
+      edit?: 게시판을 수정 할 권한이 없습니다.
+      destroy?: 게시판을 삭제 할 권한이 없습니다.

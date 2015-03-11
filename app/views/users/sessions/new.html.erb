@@ -1,0 +1,11 @@
+
+
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= f.input :email, required: true, autofocus: true, error: false %>
+    <%= f.input :password, required: true, error: false %>
+    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+
+    <%= f.button :submit, "Sign in" %>
+<% end %>
+
+<%= render "users/shared/links" %>

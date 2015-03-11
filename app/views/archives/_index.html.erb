@@ -1,0 +1,40 @@
+<div class="ui modal" id="archive_list">
+  <i class="close icon"></i>
+  <div class="header">
+    임시 보관중인 글 (<span class="archives_count"><%= @archives.count %></span>) 개
+  </div>
+  <div class="content">
+    <table class="ui small table">
+      <thead>
+      <tr>
+        <th>제목</th>
+        <th>작성시간</th>
+        <th><%= check_box("archive", "all", {}, @archives.pluck(:id), nil) %>전체선택</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @archives.order('created_at DESC').each do |archive| %>
+          <tr>
+            <td><%= archive.title %></td>
+            <td><%= time_ago_in_words archive.created_at %></td>
+            <td>
+              <%= check_box("archive", nil, {}, archive.id, nil) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui buttons">
+      <div class="ui red basic button destroy">
+        <i class="remove icon"></i>
+        삭제하기
+      </div>
+      <div class="ui green basic button insert">
+        <i class="checkmark icon"></i>
+        불러오기
+      </div>
+    </div>
+  </div>
+</div>

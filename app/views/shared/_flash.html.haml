@@ -1,0 +1,9 @@
+- unless flash.blank?
+  - flash.each do |type, message|
+    - if message.is_a? Array
+      .ui.red.message.floating
+        %ul.list
+          - message.each do |msg|
+            %li= msg
+    - else
+      %div{class: "ui floating message #{custom_flash(type)}"}= message

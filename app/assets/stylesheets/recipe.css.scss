@@ -1,0 +1,46 @@
+$font-size: 14px;
+$padding-left: 20px;
+$line-height: 25px;
+$link-normal: #555;
+$link-hover:  #009fda;
+
+#recipe.page {
+  padding: 0 20px;
+  section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 14px;
+
+    .ribbon {
+      font-size: $font-size;
+    }
+
+    h3 {
+      font-weight: 900;
+      padding-left: 20px;
+      i { margin-right: 10px; }
+    }
+
+    ul {
+      margin: 20px;
+      padding-left: 20px;
+      li {
+        font-size: $font-size;
+        line-height: $line-height;
+        a { color: $link-normal; }
+        a:hover { color: $link-hover; text-decoration: underline; }
+      }
+    }
+    p.description {
+      white-space: pre-wrap;       /* css-3 */
+      white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+      white-space: -pre-wrap;      /* Opera 4-6 */
+      white-space: -o-pre-wrap;    /* Opera 7 */
+      word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      line-height: $line-height;
+      font-size: $font-size;
+      a { color: $link-hover; }
+      a:hover { text-decoration: underline; }
+    }
+  }
+}

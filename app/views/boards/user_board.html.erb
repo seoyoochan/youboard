@@ -1,0 +1,11 @@
+<h1>주제: <%= @board.get_board_topic %></h1>
+<h1><%= @board.name %>에 등록된 글 <span><%= @posts.size %>개</span></h1>
+<% unless @posts.nil? %>
+    <ul>
+      <% @posts.each do |post| %>
+          <% if accessible?(post) %>
+          <li><%= link_to "#{post.title}", user_board_post_path(@board.user.username, @board, post) %></li>
+          <% end %>
+      <% end %>
+    </ul>
+<% end %>

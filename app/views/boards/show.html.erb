@@ -1,0 +1,13 @@
+<p>
+  <strong>Name:</strong>
+  <%= @board.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @board.user %>
+</p>
+
+
+<%= link_to 'Edit', edit_board_path(@board) if policy(@board).edit? %> |
+<%= link_to 'Back', boards_path %>

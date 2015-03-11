@@ -1,0 +1,21 @@
+<li class="clearfix <%= @file.id %>">
+  <div class="attachment_file_wrapper">
+      <div class="attachment_thumbnail">
+  <% if @file.overall_content_type == "image" %>
+      <span class="attachment_thumbnail_preview">
+        <img src="<%= @file.file.url %>" title="<%= File.basename(@file.file.path) %>" />
+      </span>
+  <% else %>
+      <span class="attachment_thumbnail_preview"><%= @file.extension %></span>
+  <% end %>
+      </div>
+      <p class="attachment_details">
+        <%= link_to @file.original_name, @file.file.url, class: "attachment_title" %>
+        <span class="date"><%= time_ago_in_words(@file.created_at) %></span>
+        <span class="attachment_options">
+          <%= link_to t("attachments.download.icon").html_safe, download_path(@file), method: :post, class: "download" %>
+          <%= link_to t("attachments.delete.icon").html_safe, file_delete_path(@file), method: :delete, remote: true, class: "remove" %>
+        </span>
+      </p>
+  </div>
+</li>

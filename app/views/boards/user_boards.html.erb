@@ -1,0 +1,19 @@
+<div id="user_boards">
+  <h2 class="ui header"><%= params[:username] %>의 게시판 목록</h2>
+  <div class="ui divider"></div>
+    <%= link_to "현재 게시판이 없습니다. 생성하시겠습니까?", new_board_path, class: "no_exist" if signed_in? && current_user.myself?(@user) && !@user.boards? %>
+    <% unless @boards.nil? %>
+    <ul>
+        <% @boards.each do |board| %>
+          <% if accessible? board %>
+            <li>
+              게시판명: <%= link_to "#{board.name} (#{board.posts.size}개의 글)", user_board_path(params[:username], board) %>
+              주제: <%= board.get_board_topic %><br/>
+              <%= link_to "구독하기", subscriptions_path(board.class.to_s.downcase, board), method: :post if signed_in? && !current_user.subscribed?(board) %>
+              <%= link_to "구독 취소", subscriptions_path(board.class.to_s.downcase, board), method: :delete if signed_in? && current_user.subscribed?(board) %>
+            </li>
+          <% end %>
+        <% end %>
+    </ul>
+    <% end %>
+</div>

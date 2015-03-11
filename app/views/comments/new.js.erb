@@ -1,0 +1,25 @@
+var form = $('<%= j render("comments/nested_form") %>').fadeIn();
+if ($('body').hasClass('comment_form_open')){
+    $('body').removeClass('comment_form_open');
+    $('body').removeAttr('id');
+    var CURRENT_CLICKED_COMMENT_ID = $('ul li#comment_<%= params[:parent_id] %>').attr('data-comment-id');
+    if ( PREV_CLICKED_COMMENT_ID === CURRENT_CLICKED_COMMENT_ID ){
+        $('ul li#comment_' + CURRENT_CLICKED_COMMENT_ID +' #comment_form_container').replaceWith("<div class='form_replace_" + CURRENT_CLICKED_COMMENT_ID + "'></div>");
+    } else {
+        // 이미 열린 답글이 있을때 중복해서 다른 답글을 열때 이전에 열린 답글을 닫는다.
+        $('ul li#comment_' + PREV_CLICKED_COMMENT_ID +' #comment_form_container').replaceWith("<div class='form_replace_" + PREV_CLICKED_COMMENT_ID + "'></div>");
+        // 새로 클릭한 답글을 열고 body에 comment id 다시 업데이트
+        $('ul li#comment_<%= params[:parent_id] %> .form_replace_<%= params[:parent_id] %>').replaceWith(form);
+        $('ul li#comment_<%= params[:parent_id] %> .new_comment .body').focus();
+        $('body').addClass('comment_form_open');
+        $('body').attr('id','<%= params[:parent_id] %>');
+        var PREV_CLICKED_COMMENT_ID = $('body').attr('id');
+    }
+} else {
+    // 최초로 답글 열었을때
+    $('ul li#comment_<%= params[:parent_id] %> .form_replace_<%= params[:parent_id] %>').replaceWith(form);
+    $('ul li#comment_<%= params[:parent_id] %> .new_comment .body').focus();
+    $('body').addClass('comment_form_open');
+    $('body').attr('id','<%= params[:parent_id] %>');
+    var PREV_CLICKED_COMMENT_ID = $('body').attr('id');
+}

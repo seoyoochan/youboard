@@ -1,0 +1,43 @@
+/******************************************
+* Youboard Style
+********************************************/
+::-moz-selection {
+  background: $main_color !important;
+  color: #fff !important;
+}
+::selection {
+  background: $main_color !important;
+  color: #fff !important;
+}
+
+/*******************************
+* Customizing Semantic ui
+********************************/
+.ui.checkbox label, .ui.checkbox + label {
+  color: #333;
+}
+.ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
+  background-color: $main_color;
+}
+.ui.toggle.checkbox input:checked ~ .box, .ui.toggle.checkbox input:checked ~ label {
+  color: $main_color;
+}
+.ui.toggle.checkbox input:checked ~ .box:before, .ui.toggle.checkbox input:checked ~ label:before {
+  background-color: $main_color;
+  color: $main_color;
+}
+// Position flash message
+.ui.message {
+  position: fixed;
+  top: 30px;
+  right: 35px;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: 10000;
+}
+
+.nav .ui.popup.visible {
+  color: #555 !important;
+//  font-weight: bold !important;
+  text-transform: capitalize !important;
+}

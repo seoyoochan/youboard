@@ -1,0 +1,20 @@
+.ui.grid.one.column.page
+  .left.floated.left.aligned.thirteen.wide.column#content
+    .column.thirteen.wide.grid{style: "background-color: yellow"}
+      모든게시판
+      - if @boards && @subscribers
+        - @boards.each_with_index do |board, index|
+          = "게시판명 #{board.name}, 구독자수: #{@subscribers[index]}"
+    .column.thirteen.wide.grid{style: "background-color: pink"}
+      ㅇㄴㄹㅇㄹ
+  .right.floated.left.aligned.three.wide.column#sidebar
+    %ul.ui.vertical.menu
+      %li.item
+        .ui.transparent.icon.input#filter
+          %input{id: "topic-livefilter-input", type: "text", placeholder: t("default.topic_filter")}
+          %i.search.icon
+      .item
+        %ul{id: "topic-livefilter-list"}
+          %li.item= link_to "<strong>모든 주제</strong>".html_safe, root_url
+          - @menu_list.each_with_index do |value, index|
+            %li.item= link_to value, "/topics?filter=#{index}"

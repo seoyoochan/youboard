@@ -1,0 +1,15 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true } ) do |f| %>
+    <%= f.input :first_name, required: true, autofocus: true %>
+    <%= f.input :last_name, required: true, autofocus: true %>
+    <%= f.input :username, required: true, autofocus: true, placeholder: "영어와 숫자만 가능" %>
+    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :password, required: true %>
+    <%= f.input :locale, collection: @locales.map { |k,v| [v,k] }, selected: I18n.locale, wrapper: false, input_html: { class: "locale" }, label: false, error: false %>
+    <%= f.input :birthday, as: :date, wrapper: false, order: [:year, :month, :day], prompt: {year: t('date.year'), month: t('date.month'), day: t('date.day')},
+                start_year: Date.current.year, end_year: 1920, use_month_names: t(:month_names, scope: :date),
+                required: false, label: false, input_html: { class: "birthday" }, error: false %>
+    <%= f.input :gender, collection: { :female => t("signup.gender.female"), :male => t("signup.gender.male") }.map { |k,v| [v,k] }, prompt: "I am.." %>
+    <%= f.button :submit, "Sign up" %>
+<% end %>
+
+<%= render "users/shared/links" %>

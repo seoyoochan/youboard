@@ -1,0 +1,171 @@
+<% if accessible? comment %>
+    <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+      <strong class="author"><%= name_mapper(comment.user) %></strong>
+      <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+      <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+      <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? && signed_in? %>
+      <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? && signed_in? %>
+      <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+      <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+      <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+      <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+      <div class="body">
+        <%= comment.body %>
+      </div>
+      <div class="form_replace form_replace_<%= comment.id %>"></div>
+      <% if comment.has_children? %>
+          <ul>
+            <% comment.children.each do |comment|  %>
+                <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                  <strong class="author"><%= name_mapper(comment.user) %></strong>
+                  <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                  <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                  <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                  <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                  <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                  <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                  <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                  <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                  <div class="body">
+                    <%= comment.body %>
+                  </div>
+                  <div class="form_replace form_replace_<%= comment.id %>"></div>
+                  <% if comment.has_children? %>
+                      <ul>
+                        <% comment.children.each do |comment| %>
+                            <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                              <strong class="author"><%= name_mapper(comment.user) %></strong>
+                              <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                              <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                              <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                              <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                              <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                              <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                              <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                              <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                              <div class="body">
+                                <%= comment.body %>
+                              </div>
+                              <div class="form_replace form_replace_<%= comment.id %>"></div>
+                              <% if comment.has_children? %>
+                                  <ul>
+                                    <% comment.children.each do |comment|  %>
+                                        <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                                          <strong class="author"><%= name_mapper(comment.user) %></strong>
+                                          <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                                          <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                                          <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                                          <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                                          <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                                          <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                                          <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                                          <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                                          <div class="body">
+                                            <%= comment.body %>
+                                          </div>
+                                          <div class="form_replace form_replace_<%= comment.id %>"></div>
+                                          <% if comment.has_children? %>
+                                              <ul>
+                                                <% comment.children.each do |comment| %>
+                                                    <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                                                      <strong class="author"><%= name_mapper(comment.user) %></strong>
+                                                      <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                                                      <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                                                      <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                                                      <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                                                      <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                                                      <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                                                      <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                                                      <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                                                      <div class="body">
+                                                        <%= comment.body %>
+                                                      </div>
+                                                      <div class="form_replace form_replace_<%= comment.id %>"></div>
+                                                      <% if comment.has_children? %>
+                                                          <ul>
+                                                            <% comment.children.each do |comment|  %>
+                                                                <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                                                                  <strong class="author"><%= name_mapper(comment.user) %></strong>
+                                                                  <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                                                                  <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                                                                  <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                                                                  <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                                                                  <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                                                                  <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                                                                  <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                                                                  <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                                                                  <div class="body">
+                                                                    <%= comment.body %>
+                                                                  </div>
+                                                                  <div class="form_replace form_replace_<%= comment.id %>"></div>
+                                                                  <% if comment.has_children? %>
+                                                                      <ul>
+                                                                        <% comment.children.each do |comment| %>
+                                                                            <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                                                                              <strong class="author"><%= name_mapper(comment.user) %></strong>
+                                                                              <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                                                                              <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                                                                              <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                                                                              <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                                                                              <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                                                                              <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                                                                              <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                                                                              <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                                                                              <div class="body">
+                                                                                <%= comment.body %>
+                                                                              </div>
+                                                                              <div class="form_replace form_replace_<%= comment.id %>"></div>
+                                                                              <% if comment.has_children? %>
+                                                                                  <ul>
+                                                                                    <% comment.children.each do |comment| %>
+                                                                                        <li id="comment_<%= comment.id %>" class="clearfix" data-comment-id="<%= comment.id %>">
+                                                                                          <strong class="author"><%= name_mapper(comment.user) %></strong>
+                                                                                          <span class="time"><%= time_ago_in_words comment.updated_at %></span>
+                                                                                          <%= link_to "답글", new_comment_path(comment.id), remote: true, class: "reply" if signed_in? %>
+                                                                                          <%= link_to "수정", edit_post_comment_path(comment.obj, comment), remote: true if policy(comment).edit? %>
+                                                                                          <%= link_to "삭제", post_comment_path(comment.obj, comment), method: :delete, remote: true, data: { confirm: "Are you sure?" } if policy(comment).destroy? %>
+                                                                                          <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고".html_safe, post_comment_reports_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.reported?(comment) %>
+                                                                                          <%= link_to "#{fa_icon 'flag', class: 'flag'} 신고취소".html_safe, post_comment_report_path(comment.obj.id, comment.id, comment), method: :delete if signed_in? && current_user.reported?(comment) %>
+                                                                                          <%= link_to "추천", post_comment_vote_path(comment.obj.id, comment.id), method: :post if signed_in? && !current_user.voted_on?(comment) %>
+                                                                                          <%= link_to "비추천", post_comment_unvote_path(comment.obj.id, comment.id), method: :delete if signed_in? && current_user.voted_on?(comment) %>
+                                                                                          <div class="body">
+                                                                                            <%= comment.body %>
+                                                                                          </div>
+                                                                                          <div class="form_replace form_replace_<%= comment.id %>"></div>
+                                                                                          <% if comment.has_children? %>
+                                                                                              <ul>
+                                                                                                <% comment.children.each do |comment| %>
+                                                                                                    <%= render partial: "comments/comment", collection: comment.children.order("updated_at DESC") %>
+                                                                                                <% end %>
+                                                                                              </ul>
+                                                                                          <% end %>
+                                                                                        </li>
+                                                                                    <% end %>
+                                                                                  </ul>
+                                                                              <% end %>
+                                                                            </li>
+                                                                        <% end %>
+                                                                      </ul>
+                                                                  <% end %>
+                                                                </li>
+                                                            <% end %>
+                                                          </ul>
+                                                      <% end %>
+                                                    </li>
+                                                <% end %>
+                                              </ul>
+                                          <% end %>
+                                        </li>
+                                    <% end %>
+                                  </ul>
+                              <% end %>
+                            </li>
+                        <% end %>
+                      </ul>
+                  <% end %>
+                </li>
+            <% end %>
+          </ul>
+      <% end %>
+    </li>
+<% end %>

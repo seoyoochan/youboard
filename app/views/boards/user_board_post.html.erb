@@ -1,0 +1,138 @@
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <%= "#{fa_icon 'eye'} #{@post.views.count}".html_safe %> 명이 읽음
+</p>
+
+<p>
+  추천수 <%= @post.votes_count %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body.html_safe %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user.email %>
+</p>
+
+<p>
+  <strong>Board:</strong>
+  <%= @post.board.name %>
+</p>
+
+
+<% if signed_in? %>
+<br/>
+<p>
+  <%= link_to "#{fa_icon 'bookmark', class: 'bookmark'}".html_safe, scrap_path(@post.user.username, @post.board_id, @post), method: :post unless current_user.scrapped?(@post) %>
+  <%= link_to "#{fa_icon 'bookmark', class: 'bookmarked'}".html_safe, scrap_path(@post.user.username, @post.board_id, @post), method: :delete if current_user.scrapped?(@post) %>
+</p>
+<br/>
+
+<br/>
+<p>
+  <%= link_to "#{fa_icon 'flag'} 신고".html_safe, reports_path(@post.user.username, @post.board_id, @post), method: :post unless current_user.reported?(@post) %>
+  <%= link_to "#{fa_icon 'flag'} 신고취소".html_safe, report_path(@post.user.username, @post.board_id, @post), method: :delete if current_user.reported?(@post) %>
+</p>
+
+<br/>
+
+<p>
+  <%= link_to "추천", post_vote_path(@post.user.username, @post.board_id, @post), method: :post unless current_user.voted_on? @post %>
+  <%= link_to "비추천", post_unvote_path(@post.user.username, @post.board_id, @post), method: :delete if current_user.voted_on? @post %>
+</p>
+
+<p>
+  <%= link_to "삭제", @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
+
+<% end %>
+
+<br/>
+
+<%= render @post.attachment if @post.attachment %>
+
+<br/>
+
+
+<section class="comments_section">
+  <%= render partial: "comments/form" if (user_signed_in?) && (@post.allow_comment == true) %>
+  <h3 class="comments_size_heading">댓글수: <em class="number"><%= @post.comments.size %></em></h3>
+  <ul id="comment_list" class="passed_comment">
+    <%= render partial: "comments/comment", collection: @post.root_comments.order("updated_at DESC") %>
+    <%# will_paginate @comments, previous_label: "<", next_label: ">", param_name: "comments_page" %>
+  </ul>
+</section>
+
+
+<%= link_to 'Edit', user_board_post_edit_path(@post.user.username, @post.board_id, @post) %> |
+<%= link_to 'Back', posts_path %>
+<%= link_to "글쓰기", new_post_path %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    window.faye_subscriber = new Faye.Client('/faye');
+    jQuery(function(){
+        faye_subscriber.subscribe('/comments', function(data){
+
+            // Increase the number of comments
+            var size = "<em class='number'>" + data.size + "</em>";
+            $('.comments_size_heading .number').replaceWith(size);
+
+            // Check permission of accessing to the newly created comment
+            $.getJSON('/comments/'+ data.comment_id, function(response) {
+
+                // the current user is authorized to see the real-time comment
+                if (response.status === 'ok') {
+
+                    // if user opened any form, then close it and empty the comment textarea after submit
+                    var opened_id = $('body').attr('id');
+                    $('#comment_'+opened_id+' #comment_form_container').replaceWith("<div class='form_replace form_replace_" + opened_id + "'></div>");
+                    $('body').removeClass('comment_form_open');
+                    $('body').removeAttr('id');
+
+                    // Change only the contents
+                    if (data.comment_id && data.action === 'update') {
+                        $('#comment_list #comment_'+ data.comment_id + ' > .body').replaceWith("<div class='body'>"+ data.message +"</div>");
+
+                    }
+                    else if (data.comment_id && data.action === 'destroy') {
+                        var size = "<em class='number'>" + data.size + "</em>";
+                        $('.comments_size_heading .number').replaceWith(size);
+                        $("#comment_" + data.comment_id).remove();
+                    }
+                    else {
+                        if (data.parent_id) {
+                            // Children comment
+                            var ul_element = $('#comment_list #comment_' + data.parent_id).find('ul');
+                            if ( ul_element.length ) {
+                                ul_element.append(data.message);
+                            } else {
+                                $('#comment_list #comment_' + data.parent_id).append("<ul>"+ data.message +"</ul>");
+                            }
+
+                        } else {
+
+                            // Root comment
+                            $('#comment_list').prepend(data.message);
+                        }
+                    }
+                }
+                // when the current user is unauthorized to do so
+                else {
+                }
+            });
+
+        });
+
+//        faye_subscriber.callback(function(){}); // Use when needed
+    });
+});
+</script>
