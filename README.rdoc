@@ -1,28 +1,14 @@
-== README
+== Youboard
+  - 이 웹 애플리케이션은 Monolithic 한 형태의 문제점이 있어서 현재 새로운 애플리케이션으로 다시 개발중이며, 다른 Ruby 개발자들의 학습을 위해 공개합니다.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+== 소개 
+  - 네이버나 다음 같은 카페/블로그의 파일 이동을 할 수 없어서, 실시간으로 댓글을 달고 채팅할 수 없는 게시판 커뮤니티를 떠나세요.
+    유보드를 이용하면 자신만의 게시판을 무제한으로 만들어서 이용할 수 있습니다.
 
-Things you may want to cover:
+    그간 작성한 게시글의 DB와 첨부파일을 압축해서 다운로드 할 수 있으며,
+    실시간으로 채팅 및 댓글을 주고 받을 수 있습니다.
+    또한 상대방의 게시판을 구독하고 뉴스피드로 묶어서 받아볼 수 있습니다.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+  - Faye의 Bayeux Protocol로 실시간 댓글 기능
+  - AJAX로 파일업로드의 진행상황과 미리보기를 제공
+  - 성능개선을 고려한 카테고리명 알고리즘(런타임)
